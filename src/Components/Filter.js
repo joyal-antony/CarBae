@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import FilterCars from './FilterCars'
+import { filterBody, filterTransmission, filterBudget, filterTotal } from "../redux/action";
+
+
 import button from './Search.module.css'
 import container from './Car.module.css'
-
-
 import filter from './Filter.module.css'
+
 import close from '../icons/close.svg'
 import suv from '../icons/suv.svg'
 import dropdown from '../icons/dropdown.svg'
@@ -15,9 +17,12 @@ import hatchback from '../icons/hatchback.svg'
 import sedan from '../icons/sedan.svg'
 
 
-import { filterBody, filterTransmission, filterBudget } from "../redux/action";
 
 function Filter() {
+
+  const [bodyType, setBodyType] = useState()
+  const [transmission, setTransmission] = useState()
+  const [budget, setBudget] = useState()
 
   const dispatch = useDispatch();
 
@@ -28,21 +33,24 @@ function Filter() {
   const { cars: filteredCars } = carFilter;
 
   const handleBodyType = value => {
+    setBodyType(value)
     dispatch(filterBody(cars, value));
   };
 
   const handleTransmission = value => {
+    setTransmission(value)
     dispatch(filterTransmission(cars, value));
 
   };
 
   const handleBudget = value => {
+    setBudget(value)
     dispatch(filterBudget(cars, value));
 
   };
 
   const searchSubmit = () => {
-    console.log('Need to add Feature')
+    dispatch(filterTotal(cars, budget, bodyType, transmission));
   }
   return (
     <>
@@ -60,27 +68,16 @@ function Filter() {
         <li>
           <input type="checkbox" id="list-item-3" />
           <label htmlFor="list-item-3" className={filter.last}>BUDGET<span>
+            {(budget === 'a') && (`< 10 lakh`)}
+            {(budget === 'b') && (`10-25 lakh`)}
+            {(budget === 'c') && (`> 25 lakh`)}
             <img src={dropdown} alt="dropdown"></img>
-          </span></label>
+          </span>
+          </label>
           <ul>
-            <li>
-              <div onClick={e => handleBudget("a")} className={filter.select}>
-                <p className={filter.budget}>&#8377;</p>
-                <p className={filter.budget1}>&#60; 10 LAKH</p>
-              </div>
-            </li>
-            <li>
-              <div onClick={e => handleBudget("b")} className={filter.select}>
-                <p className={filter.budget}>&#8377;&#8377;</p>
-                <p className={filter.budget1}>10 -25 LAKH</p>
-              </div>
-            </li>
-            <li>
-              < div onClick={e => handleBudget("c")} className={filter.select}>
-                <p className={filter.budget}>&#8377;&#8377;&#8377;</p>
-                <p className={filter.budget1}>&#62; 25 LAKH</p>
-              </div>
-            </li>
+            <Budget click={e => handleBudget("a")} img='&#8377;' dep='&#60; 10 LAKH' />
+            <Budget click={e => handleBudget("b")} img='&#8377;&#8377;' dep='10 -25 LAKH ' />
+            <Budget click={e => handleBudget("c")} img='&#8377;&#8377;&#8377;' dep='&#62; 25 LAKH' />
           </ul>
         </li>
 
@@ -88,30 +85,13 @@ function Filter() {
         <li>
           <input type="checkbox" id="list-item-2" />
           <label htmlFor="list-item-2">BODY TYPE <span>
+            {bodyType}
             <img src={dropdown} alt="dropdown"></img>
           </span></label>
           <ul>
-            <li>
-              <div onClick={e => handleBodyType("suv")} className={filter.select}>
-                <img src={suv} alt="dropdown"
-                ></img>
-                <p className={filter.budget1}>suv</p>
-              </div>
-            </li>
-            <li>
-              <div onClick={e => handleBodyType("hatchback")} className={filter.select}>
-                <img src={hatchback} alt="dropdown"
-                ></img>
-                <p className={filter.budget1}>hatchback</p>
-              </div>
-            </li>
-            <li>
-              <div onClick={e => handleBodyType("sedan")} className={filter.select}>
-                <img src={sedan} alt="dropdown"
-                ></img>
-                <p className={filter.budget1}>sedan</p>
-              </div>
-            </li>
+            <BodyType click={e => handleBodyType("suv")} img={suv} dep='suv' />
+            <BodyType click={e => handleBodyType("hatchback")} img={hatchback} dep='hatchback' />
+            <BodyType click={e => handleBodyType("sedan")} img={sedan} dep='sedan' />
           </ul>
         </li>
 
@@ -119,24 +99,13 @@ function Filter() {
         <li>
           <input type="checkbox" id="list-item-1" />
           <label htmlFor="list-item-1" className={filter.first}>TRANSMISSION TYPE <span>
+            {transmission}
             <img src={dropdown} alt="dropdown"></img>
           </span> </label>
           <ul>
-            <li>
-              <div onClick={e => handleTransmission("manual")} className={filter.select}>
-                <p className={filter.budget1}>MANUAL</p>
-              </div>
-            </li>
-            <li>
-              <div onClick={e => handleTransmission("auto")} className={filter.select}>
-                <p className={filter.budget1}>AUTOMATIC</p>
-              </div>
-            </li>
-            <li>
-              <div onClick={e => handleTransmission("both")} className={filter.select}>
-                <p className={filter.budget1}>BOTH</p>
-              </div>
-            </li>
+            <Transmission click={e => handleTransmission("manual")} dep='MANUAL' />
+            <Transmission click={e => handleTransmission("auto")} dep='AUTOMATIC' />
+            <Transmission click={e => handleTransmission("both")} dep='BOTH' />
           </ul>
         </li>
 
@@ -159,3 +128,36 @@ function Filter() {
 }
 
 export default Filter
+
+const Budget = (props) => {
+  return (
+    <li>
+      <div onClick={props.click} className={filter.select}>
+        <p className={filter.budget}>{props.img}</p>
+        <p className={filter.budget1}>{props.dep}</p>
+      </div>
+    </li>
+  )
+}
+
+const BodyType = (props) => {
+  return (
+    <li>
+      <div onClick={props.click} className={filter.select}>
+        <img src={props.img} alt=""
+        ></img>
+        <p className={filter.budget1}>{props.dep}</p>
+      </div>
+    </li>
+  )
+}
+const Transmission = (props) => {
+  return (
+    <li>
+      <div onClick={props.click} className={filter.select}>
+        <p className={filter.budget1}>{props.dep}</p>
+      </div>
+    </li>
+  )
+}
+

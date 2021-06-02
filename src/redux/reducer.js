@@ -4,7 +4,8 @@ import {
   CAR_LIST_FAIL,
   FILTER_BODY,
   FILTER_TRANSMISSION,
-  FILTER_BUDGET
+  FILTER_BUDGET,
+  FILTER_TOTAL
 } from './constants.js'
 
 function carListReducer(state = { cars: [] }, action) {
@@ -53,6 +54,46 @@ function carFilterReducer(state = { cars: [] }, action) {
       });
       return {
         cars: bugdFilter
+      };
+
+
+    case FILTER_TOTAL:
+      const { cars: array, budget, bodytype, transmission } = action.payload
+      const filter = {
+        body_type: bodytype ? bodytype : '',
+        transmission_types: transmission ? transmission : ''
+      }
+
+      function filterArray(array, filters) {
+        const filterKeys = Object.keys(filters);
+        return array.filter(item => {
+          // validates all filter criteria
+          return filterKeys.every(key => {
+
+            // ignores non-function predicates
+            if (!filters[key].length) { return true; }
+            return filters[key].includes(item[key])
+          });
+        });
+      }
+
+      const a = filterArray(array, filter)
+      const ans = a.filter(product => {
+        const amount = (product.price_starts + product.price_ends) / 2
+        if (budget === "a") {
+          return (amount < 1000000) ? product : undefined;
+        }
+        else if (budget === "b") {
+          return (amount > 1000000 && amount < 2500000) ? product : undefined;
+        }
+        else if (budget === "c") {
+          return (amount > 2500000) ? product : undefined;
+        }
+        else return (product)
+      });
+
+      return {
+        cars: ans
       };
 
     default:

@@ -4,7 +4,8 @@ import {
   CAR_LIST_FAIL,
   FILTER_BODY,
   FILTER_TRANSMISSION,
-  FILTER_BUDGET
+  FILTER_BUDGET,
+  FILTER_TOTAL
 } from './constants';
 import Axios from 'axios';
 
@@ -30,11 +31,16 @@ const filterBudget = (cars, value) => (dispatch) => {
   dispatch({ type: FILTER_BUDGET, payload: { cars, value } });
 };
 
+const filterTotal = (cars, budget, bodytype, transmission) => (dispatch) => {
+  dispatch({ type: FILTER_TOTAL, payload: { cars, budget, bodytype, transmission } });
+};
+
 
 
 export {
   listCars,
   filterBody,
   filterTransmission,
-  filterBudget
+  filterBudget,
+  filterTotal
 };

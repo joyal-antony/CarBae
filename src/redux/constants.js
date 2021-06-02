@@ -4,3 +4,4 @@ export const CAR_LIST_FAIL = 'CAR_LIST_FAIL';
 export const FILTER_BODY = 'FILTER_BODY';
 export const FILTER_TRANSMISSION = 'FILTER_TRANSMISSION';
 export const FILTER_BUDGET = 'FILTER_BUDGET';
+export const FILTER_TOTAL = 'FILTER_TOTAL';
