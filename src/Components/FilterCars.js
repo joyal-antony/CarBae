@@ -13,8 +13,8 @@ function FilterCars(props) {
         />
       </div>
       <div className={filCar['col-61']}>
-        <h5 >{props.res.name}</h5>
-        <p >{(props.res.price_starts / 100000).toFixed(2)} - {(props.res.price_ends / 100000).toFixed(2)} Lakh</p>
+        <p className={filCar.name}>{props.res.name}</p>
+        <p className={filCar.price}>&#8377; {(props.res.price_starts / 100000).toFixed(2)} - {(props.res.price_ends / 100000).toFixed(2)} Lakh</p>
         <br />
         <p className={filCar.blur}>6 Varaints</p>
       </div>

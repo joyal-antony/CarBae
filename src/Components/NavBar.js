@@ -3,19 +3,19 @@ import nav from './Navbar.module.css'
 import car from '../icons/car.svg'
 import search from '../icons/search.svg'
 import loc from '../icons/map.svg'
-import { Link } from "react-router-dom";
 
 
 function NavBar() {
   return (
     <nav >
-      <img src={car} alt="logo"></img>
-      <Link to='/'>
+      <div className={nav.logo}>
+
+        <img src={car} alt="logo"></img>
         <h2>CARBAE</h2>
-      </Link>
+      </div>
       <div className={nav['nav-right']}>
-        <img src={search} alt="search"></img>
         <img src={loc} alt="loc"></img>
+        <img src={search} alt="search"></img>
       </div>
     </nav>
   )

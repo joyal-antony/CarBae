@@ -1,44 +1,50 @@
 .row1 {
- margin: 15px auto;
+ margin: 16px 0;
  background: #ffffff;
  display: flex;
  align-items: center;
  overflow: hidden;
  box-sizing: border-box;
  border-radius: 10px;
- box-shadow: 5px 10px 18px #888888;
 }
 .col-41 {
- width: 50%;
+ width: 40%;
 }
 .img {
- display: block;
+ margin: 5px auto;
  border-radius: 4px;
+ display: block;
  max-width: 100%;
  box-sizing: border-box;
 }
 .col-61 {
- width: 50%;
+ width: 60%;
  padding: 0 15px;
  box-sizing: border-box;
- color: #383335;
- font-family: "Lato", sans-serif;
 }
-.col-61 p {
+.price {
+ color: #383335;
+ font-family: "Lato";
  font-size: 14px;
  font-weight: bold;
  font-style: normal;
+ line-height: 112.9%;
 }
-.col-61 h5 {
+.name {
+ font-family: "Lato";
+ line-height: 14px;
  font-style: normal;
  font-weight: normal;
  font-size: 12px;
+ color: #303335;
 }
 .blur {
+ font-family: "Lato";
  color: #92999c !important;
  font-style: normal;
  font-weight: normal;
  font-size: 12px;
+ line-height: 14px;
 }
 
 @media only screen and (min-width: 768px) {
