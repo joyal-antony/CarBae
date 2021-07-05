@@ -24,8 +24,7 @@
 .select {
  padding: 10px;
 }
-.select:hover,
-.select:checked {
+.selected {
  background: #fff2f4;
  border: 1px solid #ff4f4f;
  box-sizing: border-box;

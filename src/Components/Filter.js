@@ -22,6 +22,8 @@ function Filter(props) {
   const [transmission, setTransmission] = useState('')
   const [budget, setBudget] = useState('')
 
+
+
   const dispatch = useDispatch();
 
   const carList = useSelector((state) => state.carList);
@@ -72,9 +74,9 @@ function Filter(props) {
           </span>
           </label>
           <ul>
-            <Budget click={e => handleBudget("a")} img='&#8377;' dep='&#60; 10 LAKH' />
-            <Budget click={e => handleBudget("b")} img='&#8377;&#8377;' dep='10 -25 LAKH ' />
-            <Budget click={e => handleBudget("c")} img='&#8377;&#8377;&#8377;' dep='&#62; 25 LAKH' />
+            <Budget isActive={budget === 'a'} click={e => handleBudget("a")} img='&#8377;' dep='&#60; 10 LAKH' />
+            <Budget isActive={budget === 'b'} click={e => handleBudget("b")} img='&#8377;&#8377;' dep='10 -25 LAKH ' />
+            <Budget isActive={budget === 'c'} click={e => handleBudget("c")} img='&#8377;&#8377;&#8377;' dep='&#62; 25 LAKH' />
           </ul>
         </li>
 
@@ -85,9 +87,9 @@ function Filter(props) {
             <img src={dropdown} alt="dropdown"></img>
           </span></label>
           <ul>
-            <BodyType click={e => handleBodyType("suv")} img={suv} dep='suv' />
-            <BodyType click={e => handleBodyType("hatchback")} img={hatchback} dep='hatchback' />
-            <BodyType click={e => handleBodyType("sedan")} img={sedan} dep='sedan' />
+            <BodyType isActive={bodyType === 'suv'} click={e => handleBodyType("suv")} img={suv} dep='suv' />
+            <BodyType isActive={bodyType === 'hatchback'} click={e => handleBodyType("hatchback")} img={hatchback} dep='hatchback' />
+            <BodyType isActive={bodyType === 'sedan'} click={e => handleBodyType("sedan")} img={sedan} dep='sedan' />
           </ul>
         </li>
 
@@ -98,9 +100,9 @@ function Filter(props) {
             <img src={dropdown} alt="dropdown"></img>
           </span> </label>
           <ul>
-            <Transmission click={e => handleTransmission("manual")} dep='MANUAL' />
-            <Transmission click={e => handleTransmission("auto")} dep='AUTOMATIC' />
-            <Transmission click={e => handleTransmission("both")} dep='BOTH' />
+            <Transmission isActive={transmission === 'manual'} click={e => handleTransmission("manual")} dep='MANUAL' />
+            <Transmission isActive={transmission === 'auto'} click={e => handleTransmission("auto")} dep='AUTOMATIC' />
+            <Transmission isActive={transmission === 'both'} click={e => handleTransmission("both")} dep='BOTH' />
           </ul>
         </li>
 
@@ -115,9 +117,10 @@ function Filter(props) {
 export default Filter
 
 const Budget = (props) => {
+  const BudgetSelect = props.isActive ? `${filter.select} ${filter.selected}` : filter.select
   return (
     <li>
-      <div onClick={props.click} className={filter.select}>
+      <div onClick={props.click} className={BudgetSelect}>
         <p className={filter.budget}>{props.img}</p>
         <p className={filter.budget1}>{props.dep}</p>
       </div>
@@ -126,9 +129,11 @@ const Budget = (props) => {
 }
 
 const BodyType = (props) => {
+  const BodyTypeSelect = props.isActive ? `${filter.select} ${filter.selected}` : filter.select
+
   return (
     <li>
-      <div onClick={props.click} className={filter.select}>
+      <div onClick={props.click} className={BodyTypeSelect}>
         <img src={props.img} alt=""
         ></img>
         <p className={filter.budget1}>{props.dep}</p>
@@ -138,9 +143,11 @@ const BodyType = (props) => {
 }
 
 const Transmission = (props) => {
+  const TransmissionSelect = props.isActive ? `${filter.select} ${filter.selected}` : filter.select
+
   return (
     <li>
-      <div onClick={props.click} className={filter.select}>
+      <div onClick={props.click} className={TransmissionSelect}>
         <p className={filter.budget1}>{props.dep}</p>
       </div>
     </li>
